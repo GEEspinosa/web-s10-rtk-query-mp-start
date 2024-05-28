@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  displayAllQuotes: true,
-  highlightedQuote: null,
-}
 
 export const quotesSlice = createSlice({
   name: 'quotes',
-  initialState,
+  initialState: {
+    displayAllQuotes: true,
+    highlightedQuote: null,
+  },
   reducers: {
     toggleVisibility(state) {
       state.displayAllQuotes = !state.displayAllQuotes
@@ -19,12 +18,17 @@ export const quotesSlice = createSlice({
         state.highlightedQuote = action.payload
       }
     },
+    editQuoteAuthenticity: (state, action) => {
+      let quote = state.quotes.find(td => td.id === action.payload)
+      quote.apocryphal = !quote.apocryphal
+    }
   }
 })
 
 export const {
   setHighlightedQuote,
   toggleVisibility,
+  editQuoteAuthenticity
 } = quotesSlice.actions
 
 export default quotesSlice.reducer
